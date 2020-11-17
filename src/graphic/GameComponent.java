@@ -30,6 +30,8 @@ public class GameComponent extends JPanel {
                         color = true;
                     }
                     repaint();
+                    board.isWinner(p);
+
                 }
 
             }
