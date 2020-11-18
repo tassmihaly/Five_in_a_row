@@ -8,14 +8,14 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class GameComponent extends JPanel {
+public class GameComponent extends JComponent {
     private final int cellSize = 40;
     private Board board;
     private boolean color = false;
 
     public GameComponent(Board b){
         board = b;
-        setPreferredSize(new Dimension(board.getHeight()*cellSize, board.getWidth()*cellSize));
+        setPreferredSize(new Dimension(board.getWidth()*cellSize, board.getHeight()*cellSize));
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -54,7 +54,7 @@ public class GameComponent extends JPanel {
 
     private void drawField(Graphics2D graphic2d){
         graphic2d.setColor(Color.black);
-        graphic2d.setStroke(new BasicStroke(2));
+        graphic2d.setStroke(new BasicStroke(1));
         for(int i = 0; i <= board.getHeight()*cellSize; i+= cellSize){
             graphic2d.drawLine(0,i,board.getWidth()*cellSize,i);
         }
