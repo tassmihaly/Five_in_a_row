@@ -5,17 +5,21 @@ import structural.Position;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.concurrent.CountDownLatch;
+
 
 public class GameComponent extends JComponent {
-    private final int cellSize = 40;
+    private final int cellSize = 25;
     private Board board;
     private boolean color = false;
 
     public GameComponent(Board b){
         board = b;
         setPreferredSize(new Dimension(board.getWidth()*cellSize, board.getHeight()*cellSize));
+
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -31,9 +35,7 @@ public class GameComponent extends JComponent {
                     }
                     repaint();
                     board.isWinner(p);
-
                 }
-
             }
             @Override
             public void mousePressed(MouseEvent e) {}
@@ -86,5 +88,30 @@ public class GameComponent extends JComponent {
         graphic2d.setStroke(new BasicStroke(3));
         graphic2d.drawOval(p.getX()*cellSize +5,p.getY()*cellSize +5,cellSize-10,cellSize-10);
     }
+
+    public boolean getLastClick() throws InterruptedException {
+        CountDownLatch c = new CountDownLatch(1);
+        addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("x:"+e.getX()+"-y:"+e.getY());
+                c.countDown();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {}
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+            @Override
+            public void mouseEntered(MouseEvent e) {}
+            @Override
+            public void mouseExited(MouseEvent e) {}
+        });
+        c.await();
+        System.out.println("ittennnn");
+        return true;
+    }
+
+
 
 }

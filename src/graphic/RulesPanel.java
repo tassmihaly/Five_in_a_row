@@ -33,7 +33,7 @@ public class RulesPanel extends JPanel {
                 "a saj&aacute;t jeleiket, tipikusan k&ouml;r &eacute;s kereszt. Az a j&aacute;t&eacute;kos nyer," +
                 " aki hamarabb tud lerakni &ouml;t szomsz&eacute;dos jelet, amelyek egy vonalon helyezkednek el. " +
                 "Ez lehet f&uuml;ggőlegesen, v&iacute;zszintesen, de ak&aacute;r &aacute;tl&oacute;ban is. " +
-                "A jelen nem visszavehetőek, illetve csak olyan helyre szabad rakni, ahol m&eacute;g nincsen jel. </p></html>";
+                "A jelek nem visszavehetőek, illetve csak olyan helyre szabad rakni, ahol m&eacute;g nincsen jel. </p></html>";
 
         JLabel jl = new JLabel(string);
         add(jl,BorderLayout.CENTER);

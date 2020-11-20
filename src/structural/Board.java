@@ -28,16 +28,12 @@ public class Board {
             if (p.getX() > maxWidth) maxWidth = p.getX();
             if (p.getY() < minHeight) minHeight = p.getY();
             if (p.getX() < minWidth) minWidth = p.getX();
-            System.out.println(", Max h:" + maxHeight + ", min h: " + minHeight + ", max w: " + maxWidth + ", min w: " + minWidth);
+            System.out.println("Max h:" + maxHeight + ", min h: " + minHeight + ", max w: " + maxWidth + ", min w: " + minWidth);
         }
 
-        public int getMaxHeight() {
-            return maxHeight;
-        }
+        public int getMaxHeight() { return maxHeight; }
 
-        public int getMaxWidth() {
-            return maxWidth;
-        }
+        public int getMaxWidth() { return maxWidth; }
 
         public int getMinHeight() {
             return minHeight;
