@@ -17,10 +17,7 @@ public class Board {
         private int minHeight, minWidth, maxHeight, maxWidth;
 
         public MinMaxStorage() {
-            minHeight = height;
-            minWidth = width;
-            maxHeight = 0;
-            maxWidth = 0;
+            init();
         }
 
         public void add(Position p) {
@@ -28,7 +25,6 @@ public class Board {
             if (p.getX() > maxWidth) maxWidth = p.getX();
             if (p.getY() < minHeight) minHeight = p.getY();
             if (p.getX() < minWidth) minWidth = p.getX();
-            System.out.println("Max h:" + maxHeight + ", min h: " + minHeight + ", max w: " + maxWidth + ", min w: " + minWidth);
         }
 
         public int getMaxHeight() { return maxHeight; }
@@ -41,6 +37,13 @@ public class Board {
 
         public int getMinWidth() {
             return minWidth;
+        }
+
+        public void init(){
+            minHeight = height;
+            minWidth = width;
+            maxHeight = 0;
+            maxWidth = 0;
         }
     }
 
@@ -99,6 +102,15 @@ public class Board {
             }
         }
         return false;
+    }
+
+    public void init(){
+        for(int x = 0; x < height; ++x){
+            for(int y = 0; y < width; ++y){
+                board[y][x] = 0;
+            }
+        }
+        storage.init();
     }
 }
 

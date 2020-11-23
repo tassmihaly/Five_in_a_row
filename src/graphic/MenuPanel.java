@@ -1,5 +1,7 @@
 package graphic;
 
+import structural.Game;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,9 +11,11 @@ public class MenuPanel extends JPanel {
     private JButton rulesButton;
     private JPanel contentPane;
     private JButton gameButton;
+    private Game game;
 
-    public MenuPanel(JPanel panel){
+    public MenuPanel(JPanel panel, Game g){
         contentPane = panel;
+        game = g;
         gameButton = new JButton("Game");
         gameButton.addActionListener(new ActionListener() {
             @Override
@@ -32,6 +36,4 @@ public class MenuPanel extends JPanel {
         add(rulesButton);
         add(gameButton);
     }
-
-
 }

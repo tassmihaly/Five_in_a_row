@@ -7,44 +7,31 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.concurrent.CountDownLatch;
 
 
 public class GameComponent extends JComponent {
     private final int cellSize = 25;
     private Board board;
-    private boolean color = false;
+    private Position lastClick;
 
-    public GameComponent(Board b){
+    public GameComponent(Board b) {
         board = b;
-        setPreferredSize(new Dimension(board.getWidth()*cellSize, board.getHeight()*cellSize));
-
-        addMouseListener(new MouseListener() {
+        lastClick = new Position(-1,-1);
+        setPreferredSize(new Dimension(board.getWidth() * cellSize, board.getHeight() * cellSize));
+        addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
-                Position p = new Position(e.getX()/cellSize, e.getY()/cellSize);
-                if(board.getBoardAt(p) == 0){
-                    if(color) {
-                        board.setBoardAt(p, 1);
-                        color = false;
-                    }else{
-                        board.setBoardAt(p, 2);
-                        color = true;
+                synchronized (lastClick){
+                    int x = e.getX()/cellSize;
+                    int y = e.getY()/cellSize;
+                    if(x >= 0 && x < board.getWidth() && y >= 0 && y <board.getHeight() && board.getBoardAt(new Position(x,y)) == 0){
+                        lastClick.setX(x);
+                        lastClick.setY(y);
+                        System.out.println("x:"+e.getX()+", y:"+e.getY());
+                        lastClick.notify();
                     }
-                    repaint();
-                    board.isWinner(p);
                 }
             }
-            @Override
-            public void mousePressed(MouseEvent e) {}
-            @Override
-            public void mouseReleased(MouseEvent e) {}
-            @Override
-            public void mouseEntered(MouseEvent e) {}
-            @Override
-            public void mouseExited(MouseEvent e) {}
         });
     }
 
@@ -89,29 +76,6 @@ public class GameComponent extends JComponent {
         graphic2d.drawOval(p.getX()*cellSize +5,p.getY()*cellSize +5,cellSize-10,cellSize-10);
     }
 
-    public boolean getLastClick() throws InterruptedException {
-        CountDownLatch c = new CountDownLatch(1);
-        addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                System.out.println("x:"+e.getX()+"-y:"+e.getY());
-                c.countDown();
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {}
-            @Override
-            public void mouseReleased(MouseEvent e) {}
-            @Override
-            public void mouseEntered(MouseEvent e) {}
-            @Override
-            public void mouseExited(MouseEvent e) {}
-        });
-        c.await();
-        System.out.println("ittennnn");
-        return true;
-    }
-
-
+    public Position getLastClick(){return lastClick;}
 
 }
