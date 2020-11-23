@@ -18,6 +18,7 @@ public class Window extends JFrame{
     private Game game;
 
     public Window(Board b, Game g){
+        super("five in a row");
         game = g;
         board = b;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

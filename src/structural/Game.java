@@ -35,7 +35,6 @@ public class Game {
                             window.setStatusLabel(players[round].getSign() + " won");
                             break;
                         }
-                        
                         if(round == 1) round = 0;
                         else round = 1;
 
@@ -48,5 +47,9 @@ public class Game {
 
         });
         thread.start();
+    }
+
+    public static void main(String[] args) {
+        Game g = new Game();
     }
 }
