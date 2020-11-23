@@ -6,6 +6,7 @@ import structural.Position;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
@@ -18,7 +19,7 @@ public class Window extends JFrame{
     private Game game;
 
     public Window(Board b, Game g){
-        super("five in a row");
+        super("Five in a row");
         game = g;
         board = b;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -37,16 +38,13 @@ public class Window extends JFrame{
         setMinimumSize(new Dimension(700,500));
         setVisible(true);
 
-        gamePane.addComponentListener(new ComponentListener() {
+        gamePane.addComponentListener(new ComponentAdapter() {
             @Override
-            public void componentResized(ComponentEvent e) {}
-            @Override
-            public void componentMoved(ComponentEvent e) {}
-            @Override
-            public void componentShown(ComponentEvent e) {game.start();}
-            @Override
-            public void componentHidden(ComponentEvent e) {}
+            public void componentShown(ComponentEvent e) {
+                game.start();
+            }
         });
+
     }
     public Position getLastClick(){
         return gamePane.getLastClick();

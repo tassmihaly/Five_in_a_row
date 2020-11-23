@@ -47,7 +47,6 @@ public class Board {
         }
     }
 
-
     public void print() {
         for (int i = 0; i < height; ++i) {
             for (int j = 0; j < width; ++j) {
@@ -80,26 +79,17 @@ public class Board {
         int color = getBoardAt(lastStep);
         for (Position p : s) {
             int counter = 1;
-            for (int i = 1; i < 5; i++) {
-                int x = lastStep.getX() + i*p.getX();
-                int y = lastStep.getY() + i*p.getY();
-                if (x >= width || y >= height || x < 0 || y < 0 || getBoardAt(new Position(x, y)) != color)
-                    break;
-                else
-                    counter++;
+            for(int j = -1; j <= 1; j += 2){
+                for (int i = 1; i < 5; i++) {
+                    int x = lastStep.getX() + j * i * p.getX();
+                    int y = lastStep.getY() + j * i * p.getY();
+                    if (x >= width || y >= height || x < 0 || y < 0 || getBoardAt(new Position(x, y)) != color)
+                        break;
+                    else
+                        counter++;
+                }
             }
-            for (int i = 1; i < 5; i++) {
-                int x = lastStep.getX() - i*p.getX();
-                int y = lastStep.getY() - i*p.getY();
-                if (x >= width || y >= height || x < 0 || y < 0 || getBoardAt(new Position(x, y)) != color)
-                   break;
-                else
-                    counter++;
-            }
-            if (counter >= 5) {
-                System.out.println("Winner is "+ color);
-                return true;
-            }
+            if (counter >= 5) return true;
         }
         return false;
     }
