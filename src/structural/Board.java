@@ -1,23 +1,49 @@
 package structural;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class Board {
-    private int board[][];
+    private byte board[][];
     private int height;
     private int width;
     public MinMaxStorage storage;
 
     public Board(int w, int h) {
-        board = new int[w][h];
+        board = new byte[w][h];
         this.height = h;
         this.width = w;
         storage = new MinMaxStorage();
     }
 
+    public byte[][] deepCopy() {
+        return java.util.Arrays.stream(board).map(el -> el.clone()).toArray($ -> board.clone());
+    }
+
+
+    public Board(Board b){
+        this.height = b.getHeight();
+        this.width = b.getWidth();
+        this.board = new byte[width][height];
+        this.board = b.deepCopy();
+        this.storage = new MinMaxStorage(b.storage);
+    }
+
     public class MinMaxStorage {
         private int minHeight, minWidth, maxHeight, maxWidth;
 
+        public MinMaxStorage(MinMaxStorage s){
+            this.minHeight = s.minHeight;
+            this.maxHeight = s.maxHeight;
+            this.minWidth = s.minWidth;
+            this.maxWidth = s.maxWidth;
+        }
+
         public MinMaxStorage() {
             init();
+        }
+        public void print(){
+            System.out.println("minmaxs: maxw: "+maxWidth+", maxh: "+ maxHeight+", minw: "+ minWidth+", minh:"+minHeight);
         }
 
         public void add(Position p) {
@@ -45,6 +71,7 @@ public class Board {
             maxHeight = 0;
             maxWidth = 0;
         }
+
     }
 
     public void print() {
@@ -56,13 +83,12 @@ public class Board {
         }
     }
 
-    public void setBoardAt(Position p, int player) {
+    public void setBoardAt(Position p, byte player) {
         board[p.getX()][p.getY()] = player;
         storage.add(p);
-        print();
     }
 
-    public int getBoardAt(Position p) {
+    public byte getBoardAt(Position p) {
         return board[p.getX()][p.getY()];
     }
 
@@ -102,6 +128,7 @@ public class Board {
         }
         storage.init();
     }
+
 }
 
 

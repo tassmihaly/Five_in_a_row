@@ -19,4 +19,8 @@ public class Position {
     public void setY(int y) {
         this.y = y;
     }
+
+    public void addToX(int a){this.x = this.x+a;}
+    public void addToY(int a){this.y = this.y+a;}
+    public void add(int a, int b){this.x += a; this.y += b;}
 }

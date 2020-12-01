@@ -1,6 +1,6 @@
 package structural;
 
-interface Steppable {
+interface Player {
     public  Position step() throws InterruptedException;
     public char getSign();
 }

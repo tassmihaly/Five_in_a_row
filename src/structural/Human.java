@@ -3,7 +3,7 @@ import graphic.Window;
 
 import java.util.concurrent.CountDownLatch;
 
-public class Human implements Steppable{
+public class Human implements Player{
 
     private Window window;
     private char sign;
