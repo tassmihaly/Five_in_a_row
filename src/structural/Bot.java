@@ -4,9 +4,9 @@ import java.util.Map;
 
 public class Bot implements Player{
     private Board board;
-    private char sign;
-    private int level;
-    private int maxScore = 1000000;
+    private final char sign;
+    private final int level;
+    private final int maxScore = 1000000;
     private int counter = 0;
     private int scoreCallCount = 0;
 
@@ -114,14 +114,14 @@ public class Bot implements Player{
                 100, // closed 3 row
                 100,  // opened 2 row
                 1000,  // opened 3 row
-                1200  // closed 4 row
+                1000  // closed 4 row
         };
         int[] opponentScoreTable ={
-                12,  //closed 2 row
-                120, //closed 3 row
-                120,  //opened 2 row
-                1200,  //opened 3 row
-                1400  //closed 4 row
+                15,  //closed 2 row
+                150, //closed 3 row
+                150,  //opened 2 row
+                1500,  //opened 3 row
+                1500  //closed 4 row
         };
 
         private void fill(int player, int len, boolean closed) {
@@ -154,15 +154,7 @@ public class Bot implements Player{
         }
 
 
-
         public  int makeScore(byte justSteppedPlayer){
-            /*
-            System.out.println("xc: "+XC[0]+","+XC[1]+","+XC[2]);
-            System.out.println("xo: "+XO[0]+","+XO[1]+","+XO[2]);
-            System.out.println("oc: "+OC[0]+","+OC[1]+","+OC[2]);
-            System.out.println("oo: "+OO[0]+","+OO[1]+","+OO[2]);
-
-             */
 
             if(justSteppedPlayer == 1) {
                 if(XO[2] > 0 || XC[2] > 0) return -maxScore;
@@ -240,7 +232,7 @@ public class Bot implements Player{
                 else {
                     if (active != 0) {
                         int ret = scoreData.evaluate(active, lastStepped, playerCounter, closed, val != 0);
-                        if (ret != 0) return ret *holder* maxScore; //todo: max val
+                        if (ret != 0) return ret *holder* maxScore;
                     }
                     closed = active != 0;
                     active = val;
@@ -251,7 +243,7 @@ public class Bot implements Player{
             if (active != 0) {
                 boolean endClose = (iterate.getX() == b.getWidth() || iterate.getY() == b.getHeight());
                 int ret = scoreData.evaluate(active,lastStepped,playerCounter,closed,endClose);
-                if (ret != 0) return ret*holder*maxScore; //todo: max val
+                if (ret != 0) return ret*holder*maxScore;
             }
 
             // right diag from top side
@@ -268,7 +260,7 @@ public class Bot implements Player{
                 else {
                     if (active != 0) {
                         int ret = scoreData.evaluate(active, lastStepped, playerCounter, closed, val != 0);
-                        if (ret != 0) return ret *holder* maxScore; //todo: max val
+                        if (ret != 0) return ret *holder* maxScore;
                     }
                     closed = active != 0;
                     active = val;
@@ -279,7 +271,7 @@ public class Bot implements Player{
             if (active != 0) {
                 boolean endClose = (iterate.getX() == -1 || iterate.getY() == b.getHeight());
                 int ret = scoreData.evaluate(active,lastStepped,playerCounter,closed,endClose);
-                if (ret != 0) return ret*holder*maxScore; //todo: max val
+                if (ret != 0) return ret*holder*maxScore;
             }
         }
 
@@ -299,7 +291,7 @@ public class Bot implements Player{
                 } else {
                     if (active != 0) {
                         int ret = scoreData.evaluate(active, lastStepped, playerCounter, closed, val != 0);
-                        if (ret != 0) return ret *holder* maxScore; //todo: max val
+                        if (ret != 0) return ret *holder* maxScore;
                     }
                     closed = active != 0;
                     active = val;
@@ -308,7 +300,7 @@ public class Bot implements Player{
             }
             if (active != 0) {
                 int ret = scoreData.evaluate(active, lastStepped, playerCounter, closed, b.storage.getMaxWidth() == b.getWidth() - 1);
-                if (ret != 0) return ret *holder* maxScore; //todo: max val
+                if (ret != 0) return ret *holder* maxScore;
             }
 
             playerCounter = 0;
@@ -324,7 +316,7 @@ public class Bot implements Player{
                 else {
                     if (active != 0) {
                         int ret = scoreData.evaluate(active, lastStepped, playerCounter, closed, val != 0);
-                        if (ret != 0) return ret *holder* maxScore; //todo: max val
+                        if (ret != 0) return ret *holder* maxScore;
                     }
                     closed = active != 0;
                     active = val;
@@ -335,7 +327,7 @@ public class Bot implements Player{
             if (active != 0) {
                 boolean endClose = (iterate.getX() == b.getWidth() || iterate.getY() == b.getHeight());
                 int ret = scoreData.evaluate(active,lastStepped,playerCounter,closed,endClose);
-                if (ret != 0) return ret*maxScore; //todo: max val
+                if (ret != 0) return ret*maxScore;
             }
 
             playerCounter = 0;
@@ -351,7 +343,7 @@ public class Bot implements Player{
                 else {
                     if (active != 0) {
                         int ret = scoreData.evaluate(active, lastStepped, playerCounter, closed, val != 0);
-                        if (ret != 0) return ret * maxScore; //todo: max val
+                        if (ret != 0) return ret * maxScore;
                     }
                     closed = active != 0;
                     active = val;
@@ -362,7 +354,7 @@ public class Bot implements Player{
             if (active != 0) {
                 boolean endClose = (iterate.getX()-1 == 0 || iterate.getY() == b.getHeight());
                 int ret = scoreData.evaluate(active,lastStepped,playerCounter,closed,endClose);
-                if (ret != 0) return ret*maxScore; //todo: max val
+                if (ret != 0) return ret*maxScore;
             }
 
         }

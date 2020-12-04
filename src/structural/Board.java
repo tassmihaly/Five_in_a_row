@@ -1,9 +1,8 @@
 package structural;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Board {
+public class Board implements Serializable {
     private byte board[][];
     private int height;
     private int width;
@@ -29,7 +28,7 @@ public class Board {
         this.storage = new MinMaxStorage(b.storage);
     }
 
-    public class MinMaxStorage {
+    public class MinMaxStorage implements Serializable{
         private int minHeight, minWidth, maxHeight, maxWidth;
 
         public MinMaxStorage(MinMaxStorage s){
@@ -41,9 +40,6 @@ public class Board {
 
         public MinMaxStorage() {
             init();
-        }
-        public void print(){
-            System.out.println("minmaxs: maxw: "+maxWidth+", maxh: "+ maxHeight+", minw: "+ minWidth+", minh:"+minHeight);
         }
 
         public void add(Position p) {

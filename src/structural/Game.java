@@ -6,28 +6,53 @@ import graphic.Window;
 public class Game {
     private Window window;
     private Board board;
-    private Player players[];
+    private final Player[] players;
     private byte round;
-
+    private boolean multiplayer;
+    private int  botLevel;
 
     public Game(){
         System.out.println(Thread.currentThread().getName());
-        board = new Board(20,20);
+        board = new Board(40,20);
         window = new Window(board,this);
+        multiplayer = false;
+        botLevel = 1;
         players = new Player[2];
-
-
-
-
-        //players[1] = new Human('X',window);
-        players[0] = new Bot('O', board,5);
-        players[1] = new Human('X',window);
-
+        players[0] = new Human('O', window);
+        players[1] = new Human('X', window);
     }
 
-    public void start(){
-        round = 0;
-        Bot bot= new Bot('X', board,2);
+    public int getBotLevel(){
+        return botLevel;
+    }
+
+    public boolean isMultiplayer() {
+        return multiplayer;
+    }
+
+    public byte getRound() {
+        return round;
+    }
+
+    public void setPlayerParams(boolean isMultiplayer, int l){
+        players[0] = new Human('O', window);
+        if(isMultiplayer){
+            players[1] = new Human('X', window);
+            multiplayer = false;
+        }
+        else{
+            players[1] = new Bot('X',board, l);
+            multiplayer = true;
+        }
+    }
+
+    public void setBoard(Board b){
+        board = b;
+        window.updateBoard(b);
+    }
+
+    public void start(byte startRound){
+        round = startRound;
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -35,9 +60,7 @@ public class Game {
                     try {
                         window.setStatusLabel("It's " + players[round].getSign() + "'s turn");
                         Position temp = players[round].step();
-                        System.out.println("last step:"+temp.getX()+","+temp.getY());
                         board.setBoardAt(temp, (byte) (round+1));
-                        System.out.println("current score for "+(round +1)+ ": " + bot.score(board, (byte) (round +1)));
                         window.rePaint();
                         if(board.isWinner(temp)){
                             window.setStatusLabel(players[round].getSign() + " won");

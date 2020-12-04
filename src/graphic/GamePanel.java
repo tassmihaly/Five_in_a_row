@@ -16,13 +16,12 @@ public class GamePanel extends JPanel {
     private JPanel contentPane;
     private Window window;
 
-
     public GamePanel(JPanel pane, Board b, Window win){
         window = win;
         contentPane = pane;
         gamePanel = new GameComponent(b);
         saveButton = new JButton("Save");
-        statLabel = new JLabel("hello-bello");
+        statLabel = new JLabel();
         resetButton = new JButton("Reset");
         JPanel p = new JPanel();
         p.setLayout(new FlowLayout(FlowLayout.CENTER,80,5));
@@ -30,12 +29,16 @@ public class GamePanel extends JPanel {
         p.add(saveButton);
         p.add(statLabel);
         p.add(resetButton);
-        System.out.println("The Thread name is " + Thread.currentThread().getName());
 
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                if(window.saveGame()){
+                    statLabel.setText("Game saved");
+                }
+                else{
+                    statLabel.setText("Unsuccessful save");
+                }
             }
         });
 
@@ -48,6 +51,7 @@ public class GamePanel extends JPanel {
 
         setLayout(new BorderLayout());
         JScrollPane sl = new JScrollPane(gamePanel);
+
         add(sl,BorderLayout.CENTER);
         add(p,BorderLayout.PAGE_END);
     }
@@ -60,6 +64,10 @@ public class GamePanel extends JPanel {
 
     public void setStatLabel(String text){
         statLabel.setText(text);
+    }
+
+    public void updateBoard(Board b){
+        gamePanel.updateBoard(b);
     }
 
 }

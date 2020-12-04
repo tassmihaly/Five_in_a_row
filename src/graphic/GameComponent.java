@@ -78,4 +78,8 @@ public class GameComponent extends JComponent {
 
     public Position getLastClick(){return lastClick;}
 
+    public void updateBoard(Board b){
+        board = b;
+    }
+
 }
