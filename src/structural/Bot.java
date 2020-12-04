@@ -1,14 +1,12 @@
 package structural;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class Bot implements Player{
     private Board board;
     private final char sign;
     private final int level;
     private final int maxScore = 1000000;
-    private int counter = 0;
-    private int scoreCallCount = 0;
+
 
     public Bot(char sign, Board b, int level) {
         this.sign = sign;
@@ -16,22 +14,15 @@ public class Bot implements Player{
         this.level = level;
     }
 
-
     @Override
     public Position step() {
         int opponentSign = sign == 'O' ? 2 : 1;
         ScorePosData p = minimax(new Board(board), 0, -maxScore,maxScore, (byte) opponentSign);
-
-        System.out.println("bot score:"+ p.getScore());
-        System.out.println("minimax was called "+counter+" times");
-        System.out.println("score was called "+scoreCallCount+" times");
-        counter = 0;
-        scoreCallCount = 0;
         return p.getPos();
 
     }
 
-    class ScorePosData{
+    public class ScorePosData{
         Position pos;
         int score;
 
@@ -52,7 +43,6 @@ public class Bot implements Player{
 
 
     private ScorePosData minimax(Board b, int depth, int alpha, int beta, byte lastStepped){
-        counter++;
         if(depth == level) return new ScorePosData(new Position(0,0),score(b, (byte) (lastStepped)));
         ScorePosData score;
         if(lastStepped == 1){
@@ -103,7 +93,7 @@ public class Bot implements Player{
         return score;
     }
 
-    private class ScoreData {
+    public class ScoreData {
         int[] XC = new int[3];
         int[] OC = new int[3];
         int[] XO = new int[3];
@@ -188,7 +178,6 @@ public class Bot implements Player{
     /// player 2, X: minimal player
 
     public int score(Board b, byte lastStepped){
-        scoreCallCount++;
         ScoreData scoreData = new ScoreData();
         int holder = lastStepped == 1 ? 1 : -1;
 
@@ -218,7 +207,7 @@ public class Bot implements Player{
                 if (ret != 0) return ret*holder*maxScore;
             }
 
-            // left diag from top side
+            // left cross from top side
             playerCounter = 0;
             closed = b.storage.getMinHeight() == 0 || x == 0;
             Position iterate = new Position(x,b.storage.getMinHeight());
@@ -246,7 +235,7 @@ public class Bot implements Player{
                 if (ret != 0) return ret*holder*maxScore;
             }
 
-            // right diag from top side
+            // right cross from top side
             playerCounter = 0;
             closed = b.storage.getMinHeight() == 0 || x == 0;
             iterate = new Position(x,b.storage.getMinHeight());
@@ -308,6 +297,7 @@ public class Bot implements Player{
             Position iterate = new Position(b.storage.getMinWidth(),y);
             active = b.getBoardAt(iterate);
 
+            //right cross from fight side
             while(iterate.getX() <= b.storage.getMaxWidth() && iterate.getY() <= b.storage.getMaxHeight() && iterate.getY()>b.storage.getMinHeight()){
                 byte val = b.getBoardAt(iterate);
                 if (val == active) {
@@ -335,6 +325,7 @@ public class Bot implements Player{
             iterate = new Position(b.storage.getMaxWidth(),y);
             active = b.getBoardAt(iterate);
 
+            //left cross from left side
             while(iterate.getX() >= b.storage.getMinWidth()  && iterate.getY() <= b.storage.getMaxHeight() && iterate.getY()>b.storage.getMinHeight()){
                 byte val = b.getBoardAt(iterate);
                 if (val == active) {
@@ -359,10 +350,6 @@ public class Bot implements Player{
 
         }
         return scoreData.makeScore(lastStepped);
-    }
-
-    private int simpleScore(Board b, byte lastStepped){
-        return 0;
     }
 
     public char getSign(){

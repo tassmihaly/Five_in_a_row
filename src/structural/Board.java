@@ -70,15 +70,6 @@ public class Board implements Serializable {
 
     }
 
-    public void print() {
-        for (int i = 0; i < height; ++i) {
-            for (int j = 0; j < width; ++j) {
-                System.out.print(board[j][i]);
-            }
-            System.out.print("\n");
-        }
-    }
-
     public void setBoardAt(Position p, byte player) {
         board[p.getX()][p.getY()] = player;
         storage.add(p);

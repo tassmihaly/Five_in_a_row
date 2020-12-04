@@ -46,14 +46,14 @@ public class MenuPanel extends JPanel {
                     }
                     else{
                         game.setBoard(new Board(we,he));
-                        game.setPlayerParams(multiPlayer,levelSlider.getValue());
+                        game.setPlayerParams(multiPlayer,levelSlider.getValue()+1);
                         game.start((byte) 0);
                         CardLayout cardLayout = (CardLayout) contentPane.getLayout();
                         cardLayout.show(contentPane,"game");
                     }
                 }
                 catch (NumberFormatException g) {
-                    errorLabel.setText("számot pls");
+                    errorLabel.setText("Non-numeric input");
                 }
 
             }
@@ -82,6 +82,9 @@ public class MenuPanel extends JPanel {
                     CardLayout cardLayout = (CardLayout) contentPane.getLayout();
                     cardLayout.show(contentPane,"game");
                 }
+                else{
+                    errorLabel.setText("Game can't reload");
+                }
             }
         });
 
@@ -94,7 +97,7 @@ public class MenuPanel extends JPanel {
         labelTable.put(3, new JLabel("Hard") );
         levelSlider.setLabelTable(labelTable);
         levelSlider.setPaintLabels(true);
-        levelSlider.setVisible(false);
+        levelSlider.setVisible(true);
 
         JPanel multiButtonsPane = new JPanel(new FlowLayout());
         JPanel textLabelsPane = new JPanel(new FlowLayout());
@@ -167,7 +170,4 @@ public class MenuPanel extends JPanel {
        });
     }
 
-    public void setErrorLabel(String text){
-        errorLabel.setText(text);
-    }
 }

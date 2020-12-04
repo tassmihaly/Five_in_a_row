@@ -15,6 +15,7 @@ public class GamePanel extends JPanel {
     private GameComponent gamePanel;
     private JPanel contentPane;
     private Window window;
+    private JButton backButton;
 
     public GamePanel(JPanel pane, Board b, Window win){
         window = win;
@@ -23,12 +24,24 @@ public class GamePanel extends JPanel {
         saveButton = new JButton("Save");
         statLabel = new JLabel();
         resetButton = new JButton("Reset");
+        backButton = new JButton("Back");
+        JPanel bb = new JPanel(new FlowLayout(20));
         JPanel p = new JPanel();
         p.setLayout(new FlowLayout(FlowLayout.CENTER,80,5));
 
-        p.add(saveButton);
+        bb.add(saveButton);
+        bb.add(resetButton);
+        bb.add(backButton);
+        p.add(bb);
         p.add(statLabel);
-        p.add(resetButton);
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CardLayout cardLayout = (CardLayout) contentPane.getLayout();
+                cardLayout.show(contentPane,"menu");
+            }
+        });
 
         saveButton.addActionListener(new ActionListener() {
             @Override

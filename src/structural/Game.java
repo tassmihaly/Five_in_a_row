@@ -3,6 +3,8 @@ package structural;
 import graphic.GameComponent;
 import graphic.Window;
 
+import java.io.*;
+
 public class Game {
     private Window window;
     private Board board;
@@ -22,27 +24,15 @@ public class Game {
         players[1] = new Human('X', window);
     }
 
-    public int getBotLevel(){
-        return botLevel;
-    }
-
-    public boolean isMultiplayer() {
-        return multiplayer;
-    }
-
-    public byte getRound() {
-        return round;
-    }
-
     public void setPlayerParams(boolean isMultiplayer, int l){
         players[0] = new Human('O', window);
         if(isMultiplayer){
             players[1] = new Human('X', window);
-            multiplayer = false;
+            multiplayer = true;
         }
         else{
             players[1] = new Bot('X',board, l);
-            multiplayer = true;
+            multiplayer = false;
         }
     }
 
@@ -77,8 +67,40 @@ public class Game {
         thread.start();
     }
 
+    public boolean saveGame(){
+        GameStats gameStats = new GameStats(board, round, botLevel, multiplayer);
+        try {
+            FileOutputStream f = new FileOutputStream("game.ser");
+            ObjectOutputStream out = new ObjectOutputStream(f);
+            out.writeObject(gameStats);
+            out.close();
+            return true;
+        }
+        catch(IOException ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
+
+    public GameStats reLoadGame(){
+        GameStats gameStats;
+        try {
+            FileInputStream f = new FileInputStream("game.ser");
+            ObjectInputStream in = new ObjectInputStream(f);
+            gameStats = (GameStats) in.readObject();
+            in.close();
+
+        } catch(IOException ex) {
+            gameStats = new GameStats(null, (byte) 0,-1,true);
+
+        } catch(ClassNotFoundException ex) {
+            gameStats = new GameStats(null, (byte) 0,-1,true);
+
+        }
+        return gameStats;
+    }
+
     public static void main(String[] args) throws CloneNotSupportedException {
-        
         Game g = new Game();
     }
 }
