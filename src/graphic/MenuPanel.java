@@ -31,7 +31,7 @@ public class MenuPanel extends JPanel {
         multiPlayer = false;
         contentPane = panel;
         game = g;
-        gameButton = new JButton("Game");
+        gameButton = new JButton("Start");
         gameButton.setPreferredSize(new Dimension(150,30));
         gameButton.addActionListener(new ActionListener() {
             @Override
@@ -42,7 +42,10 @@ public class MenuPanel extends JPanel {
                     int we = Integer.parseInt(w);
                     int he = Integer.parseInt(h);
                     if(we > 100 || he > 50){
-                        errorLabel.setText("Maximum width is 100, maximum height is 50");
+                        errorLabel.setText("Max width is 100, max height is 50");
+                    }
+                    else if(we<8 ||he<8){
+                        errorLabel.setText("Min width is 8, min height is 8");
                     }
                     else{
                         game.setBoard(new Board(we,he));

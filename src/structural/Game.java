@@ -14,7 +14,6 @@ public class Game {
     private int  botLevel;
 
     public Game(){
-        System.out.println(Thread.currentThread().getName());
         board = new Board(40,20);
         window = new Window(board,this);
         multiplayer = false;

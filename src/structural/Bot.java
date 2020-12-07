@@ -53,7 +53,7 @@ public class Bot implements Player{
                     if(b.getBoardAt(f) == 0) {
                         Board tmpBoard = new Board(b);
                         tmpBoard.setBoardAt(f, (byte) 2);
-                        if(tmpBoard.isWinner(f)) return new ScorePosData(f,-maxScore*2);
+                        if(tmpBoard.isWinner(f)) return new ScorePosData(f,-maxScore*10);
                         ScorePosData temp = minimax(tmpBoard, depth + 1, alpha, beta, (byte)((lastStepped%2)+1));
                         if(score.getScore() > temp.getScore()) {
                             score.setScore(temp.getScore());
@@ -75,7 +75,7 @@ public class Bot implements Player{
                     if(b.getBoardAt(f) == 0) {
                         Board tmpBoard = new Board(b);
                         tmpBoard.setBoardAt(f, (byte) 1);
-                        if(tmpBoard.isWinner(f)) return new ScorePosData(f,maxScore*2);
+                        if(tmpBoard.isWinner(f)) return new ScorePosData(f,maxScore*10);
                         ScorePosData temp = minimax(tmpBoard, depth + 1, alpha, beta,(byte) ((lastStepped%2)+1));
                         if(score.getScore() < temp.getScore()){
                             score.setScore(temp.getScore());

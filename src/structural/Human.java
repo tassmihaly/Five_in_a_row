@@ -23,7 +23,6 @@ public class Human implements Player{
                 e.printStackTrace();
             }
             Position r = last.getFreshPosition();
-            System.out.println("na most hatha" + r.getX() +","+r.getY());
             return r;
         }
     }

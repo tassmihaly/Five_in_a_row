@@ -27,7 +27,6 @@ public class GameComponent extends JComponent {
                     if(x >= 0 && x < board.getWidth() && y >= 0 && y <board.getHeight() && board.getBoardAt(new Position(x,y)) == 0){
                         lastClick.setX(x);
                         lastClick.setY(y);
-                        System.out.println("x:"+e.getX()+", y:"+e.getY());
                         lastClick.notify();
                     }
                 }
