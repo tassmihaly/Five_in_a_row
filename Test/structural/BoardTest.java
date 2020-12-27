@@ -6,7 +6,6 @@ import static org.junit.Assert.*;
 
 public class BoardTest {
     Board board;
-    private byte[][] testArray;
 
     @Before
     public void setUp(){
